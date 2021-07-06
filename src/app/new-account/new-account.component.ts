@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 
+import { AccountsService } from '../accounts.service';
 import { LoggingService } from '../logging.service';
 
 /**
@@ -9,21 +10,19 @@ import { LoggingService } from '../logging.service';
   selector: 'app-new-account',
   templateUrl: './new-account.component.html',
   styleUrls: ['./new-account.component.css'],
-  providers: [LoggingService]
+  providers: [AccountsService, LoggingService]
 })
 export class NewAccountComponent {
-  @Output() accountAdded = new EventEmitter<{name: string, status: string}>();
-
   /**
    * Use a constructor to inject the service this class will use.
    */
-  constructor(private loggingService: LoggingService) { }
+  constructor(private accountsService: AccountsService, private loggingService: LoggingService) { }
 
+  /**
+   * We can remove the event emitter and simply add the account using the accounts service.
+   */
   onCreateAccount(accountName: string, accountStatus: string) {
-    this.accountAdded.emit({
-      name: accountName,
-      status: accountStatus
-    });
+    this.accountsService.addAccount(accountName, accountStatus);
     this.loggingService.logStatusChange(accountStatus);
   }
 }
