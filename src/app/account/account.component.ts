@@ -23,5 +23,11 @@ export class AccountComponent {
   onSetTo(status: string) {
     this.accountsService.updateStatus(this.id, status);
     //this.loggingService.logStatusChange(status);
+
+    /**
+     * Here, we emit an event that we set up in the accountsService. Later, in the Observables section, we will learn
+     * about a different way to handle this.
+     */
+    this.accountsService.statusUpdated.emit(status);
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { EventEmitter, Injectable } from "@angular/core";
 
 import { LoggingService } from "./logging.service";
 
@@ -30,6 +30,12 @@ export class AccountsService {
           status: 'unknown'
         }
     ];
+
+    /**
+     * We show an example where we would want to provide an event that we can trigger in one component, and listen to in
+     * another one.
+     */
+    statusUpdated = new EventEmitter<string>();
 
     /**
      * Add the logging service here, injected from the AppModule.

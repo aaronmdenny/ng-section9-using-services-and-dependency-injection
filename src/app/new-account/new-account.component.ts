@@ -16,7 +16,19 @@ export class NewAccountComponent {
   /**
    * Use a constructor to inject the service this class will use.
    */
-  constructor(private accountsService: AccountsService, private loggingService: LoggingService) { }
+  constructor(private accountsService: AccountsService, private loggingService: LoggingService) {
+    /**
+     * We subscribe to the event emitter in the accounts service.
+     * 
+     * We can do this because event emitter kind of "wraps" an Observable.
+     * 
+     * By subscribing to the event, we achieve cross-component communication without needing some kind of complex event
+     * emitters up to parents and property binding down to children.
+     */
+    this.accountsService.statusUpdated.subscribe(
+      (status: string) => alert('New Status: ' + status)
+    );
+  }
 
   /**
    * We can remove the event emitter and simply add the account using the accounts service.
